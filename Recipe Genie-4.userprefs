@@ -1,0 +1,17 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GUIManager.cs">
+    <Files>
+      <File FileName="Assets\Plugins\StoreKit\demo\StoreKitEventListener.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\GUIManager.cs" Line="1343" Column="28" />
+      <File FileName="Assets\Scripts\LoginGUI.cs" Line="182" Column="89" />
+      <File FileName="Assets\Scripts\RecipeManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\PantryManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\RecipeMaker.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>

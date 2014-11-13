@@ -1,0 +1,21 @@
+C:\Users\rrobinson\Documents\PM\Temp\bin\Debug\Assembly-CSharp.dll
+C:\Users\rrobinson\Documents\PM\Temp\bin\Debug\Assembly-CSharp.pdb
+C:\Users\rrobinson\Documents\PM\Temp\bin\Debug\UnityEditor.dll
+C:\Users\rrobinson\Documents\PM\Temp\bin\Debug\UnityEngine.dll
+C:\Users\rrobinson\Documents\PM\Temp\bin\Debug\nunit.framework.dll
+C:\Users\rrobinson\Documents\PM\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\rrobinson\Documents\PM\obj\Debug\Assembly-CSharp.dll
+C:\Users\rrobinson\Documents\PM\obj\Debug\Assembly-CSharp.pdb
+C:\Users\rrobinson\Desktop\Unity Projects\RecipeGenie\Temp\bin\Debug\Assembly-CSharp.dll
+C:\Users\rrobinson\Desktop\Unity Projects\RecipeGenie\Temp\bin\Debug\Assembly-CSharp.pdb
+C:\Users\rrobinson\Desktop\Unity Projects\RecipeGenie\Temp\bin\Debug\P31RestKit.dll
+C:\Users\rrobinson\Desktop\Unity Projects\RecipeGenie\Temp\bin\Debug\UnityEditor.dll
+C:\Users\rrobinson\Desktop\Unity Projects\RecipeGenie\Temp\bin\Debug\UnityEngine.dll
+C:\Users\rrobinson\Desktop\Unity Projects\RecipeGenie\Temp\bin\Debug\Mono.Cecil.dll
+C:\Users\rrobinson\Desktop\Unity Projects\RecipeGenie\Temp\bin\Debug\nunit.framework.dll
+C:\Users\rrobinson\Desktop\Unity Projects\RecipeGenie\Temp\bin\Debug\Unity.DataContract.dll
+C:\Users\rrobinson\Desktop\Unity Projects\RecipeGenie\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+C:\Users\rrobinson\Desktop\Unity Projects\RecipeGenie\Temp\bin\Debug\Assembly-CSharp-firstpass.pdb
+C:\Users\rrobinson\Desktop\Unity Projects\RecipeGenie\obj\Debug\Assembly-CSharp-vs.csprojResolveAssemblyReference.cache
+C:\Users\rrobinson\Desktop\Unity Projects\RecipeGenie\obj\Debug\Assembly-CSharp.dll
+C:\Users\rrobinson\Desktop\Unity Projects\RecipeGenie\obj\Debug\Assembly-CSharp.pdb
