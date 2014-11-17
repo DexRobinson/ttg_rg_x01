@@ -91,6 +91,9 @@ public class GUIManager : MonoBehaviour
     public int touchCount = 0;
     public int touchRate = 25;
 
+    public Font normalFont;
+    public Font retinaFont;
+
 #if UNITY_IPHONE
 	// In app purchases product list
 	private List<StoreKitProduct> _products;
@@ -131,9 +134,13 @@ public class GUIManager : MonoBehaviour
     {
         return middleWindowNonSort;
     }
+
     void Awake()
     {
         instance = this;
+        
+
+
 
         if (Advertisement.isSupported)
         {
@@ -256,15 +263,77 @@ public class GUIManager : MonoBehaviour
     // switch the current theme
     void ChangeGUIIndex( int newIndex )
     {
-        pantrySkin = Resources.Load("PantrySkin_" + newIndex) as GUISkin;
-        recipeSkin = Resources.Load("RecipeSelectionSkin_" + newIndex) as GUISkin;
-        nonIngSkin = Resources.Load("NonIngSkin_" + newIndex) as GUISkin;
-        gotIngSkin = Resources.Load("GotIngSkin_" + newIndex) as GUISkin;
-        settingsSkin = Resources.Load("SettingSkin_" + newIndex) as GUISkin;
-        recipePickerSkin = Resources.Load("RecipePickerSkin_" + newIndex) as GUISkin;
-        addIngSkin = Resources.Load("AddIngSkin_" + newIndex) as GUISkin;
+        //pantrySkin = Resources.Load("PantrySkin_" + newIndex) as GUISkin;
+        //recipeSkin = Resources.Load("RecipeSelectionSkin_" + newIndex) as GUISkin;
+        //nonIngSkin = Resources.Load("NonIngSkin_" + newIndex) as GUISkin;
+        //gotIngSkin = Resources.Load("GotIngSkin_" + newIndex) as GUISkin;
+        //settingsSkin = Resources.Load("SettingSkin_" + newIndex) as GUISkin;
+        //recipePickerSkin = Resources.Load("RecipePickerSkin_" + newIndex) as GUISkin;
+        //addIngSkin = Resources.Load("AddIngSkin_" + newIndex) as GUISkin;
 
         PlayerPrefs.SetInt("currentSkin", newIndex);
+
+        if (Screen.height > 1024)
+        {
+            Debug.Log("Retina Display");
+
+            List<GUISkin> allSkins = new List<GUISkin>();
+            allSkins.Add(pantrySkin);
+            allSkins.Add(recipeSkin);
+            allSkins.Add(nonIngSkin);
+            allSkins.Add(gotIngSkin);
+            allSkins.Add(settingsSkin);
+            allSkins.Add(recipePickerSkin);
+            allSkins.Add(addIngSkin);
+            allSkins.Add(bottomRowSkin);
+            allSkins.Add(recipeCreateSkin);
+            allSkins.Add(likedRecipeSkin);
+            allSkins.Add(recipePickerTopSkin);
+            allSkins.Add(storeSkin);
+            allSkins.Add(tutorialSkin);
+            allSkins.Add(LoginGUI.instance.loginSkin);
+            allSkins.Add(LoginGUI.instance.signupSkin);
+
+            for (int i = 0; i < allSkins.Count; i++)
+            {
+                allSkins[i].box.font = retinaFont;
+                allSkins[i].button.font = retinaFont;
+                allSkins[i].toggle.font = retinaFont;
+                allSkins[i].label.font = retinaFont;
+                allSkins[i].textField.font = retinaFont;
+                allSkins[i].textArea.font = retinaFont;
+            }
+        }
+        else
+        {
+            Debug.Log("Normal Display");
+            List<GUISkin> allSkins = new List<GUISkin>();
+            allSkins.Add(pantrySkin);
+            allSkins.Add(recipeSkin);
+            allSkins.Add(nonIngSkin);
+            allSkins.Add(gotIngSkin);
+            allSkins.Add(settingsSkin);
+            allSkins.Add(recipePickerSkin);
+            allSkins.Add(addIngSkin);
+            allSkins.Add(bottomRowSkin);
+            allSkins.Add(recipeCreateSkin);
+            allSkins.Add(likedRecipeSkin);
+            allSkins.Add(recipePickerTopSkin);
+            allSkins.Add(storeSkin);
+            allSkins.Add(tutorialSkin);
+            allSkins.Add(LoginGUI.instance.loginSkin);
+            allSkins.Add(LoginGUI.instance.signupSkin);
+
+            for (int i = 0; i < allSkins.Count; i++)
+            {
+                allSkins[i].box.font = normalFont;
+                allSkins[i].button.font = normalFont;
+                allSkins[i].toggle.font = normalFont;
+                allSkins[i].label.font = normalFont;
+                allSkins[i].textField.font = normalFont;
+                allSkins[i].textArea.font = normalFont;
+            }
+        }
 
         //pantrySkin = pantrySkinList[newIndex];
         //recipeSkin = recipeSkinList[newIndex];
@@ -590,6 +659,8 @@ public class GUIManager : MonoBehaviour
     public GUISkin recipeSortingSkin;
     private int currentRecipeMin = 0;
     private int currentRecipeMax = 10;
+    public GUIStyle leftAlign;
+    public GUIStyle rightAlign;
 
     // recipe pages
     void DrawRecipe()
@@ -622,7 +693,7 @@ public class GUIManager : MonoBehaviour
         //    SortByPercent();
         //}
 
-        if (GUILayout.Button("< Previous 10", GUILayout.Height(40)))
+        if (GUILayout.Button("< Previous 10", leftAlign, GUILayout.Height(40)))
         {
             if (currentRecipeMin > 0)
             {
@@ -636,7 +707,7 @@ public class GUIManager : MonoBehaviour
                     currentRecipeMax = 10;
             }
         }
-        if (GUILayout.Button("Next 10 >", GUILayout.Height(40)))
+        if (GUILayout.Button("Next 10 >", rightAlign, GUILayout.Height(40)))
         {
             if (currentRecipeMax <= allSortedList.Count)
             {
@@ -661,7 +732,7 @@ public class GUIManager : MonoBehaviour
             GUILayout.BeginHorizontal();
 			//if(RecipeManager.ReturnPercentOfRecipe(allSortedList[i].id) > 0 || isFirstTime)
 			//{
-	            //GUILayout.Label(RecipeManager.ReturnPercentOfRecipe(allSortedList[i].id).ToString("f0") + "%");
+	            GUILayout.Label(RecipeManager.ReturnPercentOfRecipe(allSortedList[i].id).ToString("f0") + "%");
 
 	            //if (GUI.Button(new Rect(5, 45 * i, middleWindow.width - 40, 44), allSortedList[i].title))
 	            if(GUILayout.Button(allSortedList[i].title, GUILayout.Height(70)))
@@ -683,7 +754,7 @@ public class GUIManager : MonoBehaviour
 	                }
 	            }
 
-                GUILayout.Label(allSortedList[i].percent.ToString("f0") + "%");
+                //GUILayout.Label(allSortedList[i].percent.ToString("f0") + "%");
                // GUILayout.Label(RecipeManager.ReturnPercentOfRecipe(allSortedList[i].id).ToString("f0") + "%");
 			//}
 
@@ -709,25 +780,25 @@ public class GUIManager : MonoBehaviour
 
 		GUILayout.BeginHorizontal();
 		//GUI.skin = pantrySkin;
-        if (GUILayout.Button("Back", GUILayout.Height(30)))
+        if (GUILayout.Button("< Back", GUILayout.Height(44)))
         {
             currentMiddleIndex = 2;
             scrollPosition = oldRecipePositionIndex;
         }
         if (LoginGUI.instance.Username() == "Dex" || LoginGUI.instance.Username() == "Chris")
         {
-            if (GUILayout.Button("Edit", GUILayout.Height(30)))
+            if (GUILayout.Button("Edit", GUILayout.Height(44)))
             {
                 EditRecipe();
                 currentMiddleIndex = 8;
             }
         }
-		if (GUILayout.Button ("Report", GUILayout.Height(30))) {
+		if (GUILayout.Button ("Report", GUILayout.Height(44))) {
 			for(int i = 0; i < PantryManager.myLikedRecipes.Count; i++)
 				Debug.Log(PantryManager.myLikedRecipes[i]);
 		}
 
-        if (GUILayout.Button("Cook", GUILayout.Height(30)))
+        if (GUILayout.Button("Cook", GUILayout.Height(44)))
         {
             for (int i = 0; i < RecipeManager.allRecipes[recipeSelected].ings.Count; i++)
             {
@@ -744,7 +815,7 @@ public class GUIManager : MonoBehaviour
 		//================================================================
 		if (PantryManager.AlreadyLiked(RecipeManager.allRecipes[recipeSelected].id)) 
 		{
-			if (GUILayout.Button ("Unlike", GUILayout.Height (30))) 
+			if (GUILayout.Button ("Unlike", GUILayout.Height (44))) 
 			{
 				PantryManager.RemoveFromLikedRecipes(RecipeManager.allRecipes[recipeSelected].id);
                 PantryManager.SaveNoCheck();
@@ -752,7 +823,7 @@ public class GUIManager : MonoBehaviour
 		}
 		else
 		{
-			if (GUILayout.Button ("Like", GUILayout.Height(30))) 
+			if (GUILayout.Button ("Like", GUILayout.Height(44))) 
 			{
 				PantryManager.AddToLikeRecipes(RecipeManager.allRecipes[recipeSelected].id);
                 PantryManager.SaveNoCheck();
@@ -765,7 +836,7 @@ public class GUIManager : MonoBehaviour
 		GUI.skin = recipeSkin;
 
         GUILayout.Label("Author: " + RecipeManager.allRecipes[recipeSelected].author);
-        if (GUILayout.Button("Link to Website"))
+        if (GUILayout.Button("Link to Website     >"))
         {
             Application.OpenURL(RecipeManager.allRecipes[recipeSelected].url);
         }
@@ -799,7 +870,7 @@ public class GUIManager : MonoBehaviour
             
             GUILayout.BeginHorizontal();
             //GUI.skin = recipeSkin;
-            GUILayout.Label(RecipeManager.allRecipes[recipeSelected].ingredientsAmount[i].ToString(), GUILayout.Width(118));
+            GUILayout.Label(RecipeManager.allRecipes[recipeSelected].ingredientsAmount[i].ToString(), GUILayout.Width(130));
             
             // need something here later to highlight what ingredients we still need
             //if (ReturnIfHaveIngridentName(RecipeManager.allRecipes[recipeSelected].ingredients[i]))
