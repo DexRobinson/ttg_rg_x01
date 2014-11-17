@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{5AF7E075-35C0-FF29-D736-7E547035C241}</ProjectGuid>
+	<ProjectGuid>{1A9BE701-C6ED-2C5E-E4E7-D4C56BA61F4B}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -141,7 +141,7 @@
  <HintPath>C:/Program Files (x86)/Unity4/Unity4.6B/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="P31RestKit">
- <HintPath>C:/Users/rrobinson/Desktop/Unity Projects/RecipeGenie/Assets/Plugins/P31RestKit.dll</HintPath>
+ <HintPath>C:/Users/rrobinson/Documents/GitHub/ttg_rg_x01/Assets/Plugins/P31RestKit.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

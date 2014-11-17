@@ -5,7 +5,7 @@
 	<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
 	<ProductVersion>10.0.20506</ProductVersion>
 	<SchemaVersion>2.0</SchemaVersion>
-	<ProjectGuid>{FB7D3DC5-3043-E8F5-9C08-4A0C794BE2D5}</ProjectGuid>
+	<ProjectGuid>{2362FB08-3CF4-375E-8894-B1D070604135}</ProjectGuid>
 	<OutputType>Library</OutputType>
 	<AppDesignerFolder>Properties</AppDesignerFolder>
 	<RootNamespace></RootNamespace>
@@ -93,19 +93,19 @@
  <HintPath>C:/Program Files (x86)/Unity4/Unity4.6B/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/Editor/UnityEditor.UI.dll</HintPath>
  </Reference>
  <Reference Include="Prime31MenuItem">
- <HintPath>C:/Users/rrobinson/Desktop/Unity Projects/RecipeGenie/Assets/Editor/Prime31/Prime31MenuItem.dll</HintPath>
+ <HintPath>C:/Users/rrobinson/Documents/GitHub/ttg_rg_x01/Assets/Editor/Prime31/Prime31MenuItem.dll</HintPath>
  </Reference>
  <Reference Include="P31RestKit">
- <HintPath>C:/Users/rrobinson/Desktop/Unity Projects/RecipeGenie/Assets/Plugins/P31RestKit.dll</HintPath>
+ <HintPath>C:/Users/rrobinson/Documents/GitHub/ttg_rg_x01/Assets/Plugins/P31RestKit.dll</HintPath>
  </Reference>
  <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
- <HintPath>C:/Users/rrobinson/Desktop/Unity Projects/RecipeGenie/Assets/UnityVS/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
+ <HintPath>C:/Users/rrobinson/Documents/GitHub/ttg_rg_x01/Assets/UnityVS/Editor/SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
  </Reference>
  <Reference Include="SyntaxTree.VisualStudio.Unity.Messaging">
- <HintPath>C:/Users/rrobinson/Desktop/Unity Projects/RecipeGenie/Assets/UnityVS/Editor/SyntaxTree.VisualStudio.Unity.Messaging.dll</HintPath>
+ <HintPath>C:/Users/rrobinson/Documents/GitHub/ttg_rg_x01/Assets/UnityVS/Editor/SyntaxTree.VisualStudio.Unity.Messaging.dll</HintPath>
  </Reference>
  <Reference Include="UnityVS.VersionSpecific">
- <HintPath>C:/Users/rrobinson/Desktop/Unity Projects/RecipeGenie/Assets/UnityVS/Editor/UnityVS.VersionSpecific.dll</HintPath>
+ <HintPath>C:/Users/rrobinson/Documents/GitHub/ttg_rg_x01/Assets/UnityVS/Editor/UnityVS.VersionSpecific.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.Graphs">
  <HintPath>C:/Program Files (x86)/Unity4/Unity4.6B/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>
@@ -113,7 +113,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
-      <Project>{5AF7E075-35C0-FF29-D736-7E547035C241}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
+      <Project>{1A9BE701-C6ED-2C5E-E4E7-D4C56BA61F4B}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

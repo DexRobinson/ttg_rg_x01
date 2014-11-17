@@ -109,9 +109,13 @@ public class GUIManager : MonoBehaviour
 
     public void IncreaseTouchCount()
     {
+#if UNITY_IPHONE || UNITY_ANDROID
+        //string productId = "19763";
         touchCount++;
+#endif
         if (touchCount > touchRate)
         {
+            Debug.Log("Ready to play ad");
             if (Advertisement.isReady())
             {
                 touchCount = 0;
@@ -140,6 +144,7 @@ public class GUIManager : MonoBehaviour
 
     void Start()
     {
+        Debug.Log(Screen.dpi);
         //PlayerPrefs.DeleteAll();
         int firstTime = PlayerPrefs.GetInt("isFirstTime");
         if (firstTime == 1)
@@ -159,6 +164,7 @@ public class GUIManager : MonoBehaviour
 		{
             middleWindowNonSort = new Rect(-2, 25, Screen.width + 5 , Screen.height - (0 + 84) - 10);
             middleWindow = new Rect(-2, 25, Screen.width - 30, Screen.height - (0 + 76) - 18);
+
             topRowRect = new Rect(Screen.width - 34, 0 + 48, 33, Screen.height - 122);
 		}
 
@@ -582,6 +588,8 @@ public class GUIManager : MonoBehaviour
     }
 
     public GUISkin recipeSortingSkin;
+    private int currentRecipeMin = 0;
+    private int currentRecipeMax = 10;
 
     // recipe pages
     void DrawRecipe()
@@ -604,14 +612,42 @@ public class GUIManager : MonoBehaviour
         //}
         GUI.skin = recipeSortingSkin;
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Sort by: ", GUILayout.Height(40));
-        //if (GUILayout.Button("Name", GUILayout.Height(40)))
+        //GUILayout.Label("Sort by: ", GUILayout.Height(40));
+        ////if (GUILayout.Button("Name", GUILayout.Height(40)))
+        ////{
+        ////    SortByName();
+        ////}
+        //if (GUILayout.Button("Percent", GUILayout.Height(40)))
         //{
-        //    SortByName();
+        //    SortByPercent();
         //}
-        if (GUILayout.Button("Percent", GUILayout.Height(40)))
+
+        if (GUILayout.Button("< Previous 10", GUILayout.Height(40)))
         {
-            SortByPercent();
+            if (currentRecipeMin > 0)
+            {
+                
+                currentRecipeMin -= 10;
+                currentRecipeMax -= 10;
+
+                if (currentRecipeMin < 0)
+                    currentRecipeMin = 0;
+                if (currentRecipeMax < 10)
+                    currentRecipeMax = 10;
+            }
+        }
+        if (GUILayout.Button("Next 10 >", GUILayout.Height(40)))
+        {
+            if (currentRecipeMax <= allSortedList.Count)
+            {
+                currentRecipeMin += 10;
+                currentRecipeMax += 10;
+
+                if(currentRecipeMax > allSortedList.Count)
+                    currentRecipeMax = allSortedList.Count;
+                if (currentRecipeMin > allSortedList.Count - 10)
+                    currentRecipeMin = allSortedList.Count - 10;
+            }
         }
         GUILayout.EndHorizontal();
 
@@ -620,7 +656,7 @@ public class GUIManager : MonoBehaviour
 
         scrollPosition = GUILayout.BeginScrollView(scrollPosition);
 
-        for (int i = 0; i < allSortedList.Count; i++)
+        for (int i = currentRecipeMin; i < currentRecipeMax; i++)
         {
             GUILayout.BeginHorizontal();
 			//if(RecipeManager.ReturnPercentOfRecipe(allSortedList[i].id) > 0 || isFirstTime)
@@ -1367,6 +1403,8 @@ public class GUIManager : MonoBehaviour
     }
 
     private bool initRecipeList = false;
+    private bool sortRecipes;
+
     // draw the bottom row of buttons
     void DrawBottomButtons()
     {
@@ -1436,10 +1474,11 @@ public class GUIManager : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
                 //if (GUI.Button(new Rect(4 + i * (Screen.width / 4 - 10), Screen.height - 72, Screen.width / 4 - 10, 72), ReturnBotRowNames(i)))
-                if (GUI.Button(new Rect(4 + i * (Screen.width / 8 - 10), Screen.height - 71, 70, 70), bottomRowIcons[i]))
+                //if (GUI.Button(new Rect(4 + i * (Screen.width / 8 - 10), Screen.height - 71, 70, 70), bottomRowIcons[i]))
+                if (GUI.Button(new Rect(((Screen.width / 4)) + (i * (Screen.width / 4) / 2), Screen.height - 71, 70, 70), bottomRowIcons[i]))
                 {
                     if (i == 2 && !initRecipeList)
                     {
@@ -1447,6 +1486,12 @@ public class GUIManager : MonoBehaviour
                         for (int ii = 0; ii < allSortedList.Count; ii++)
                         {
                             allSortedList[ii].SetPercent(RecipeManager.ReturnPercentOfRecipe(allSortedList[ii].id));
+                        }
+
+                        if (!sortRecipes)
+                        {
+                            sortRecipes = true;
+                            SortByPercent();
                         }
                     }
 
@@ -1462,16 +1507,16 @@ public class GUIManager : MonoBehaviour
                 //GUI.Box(new Rect(4 + i * (Screen.width / 8 - 10), Screen.height - lower, 70, 70), "Ingredients");
             }
 
-            if (GUI.Button(new Rect(Screen.width - Screen.width / 8, Screen.height - 71, 70, 70), bottomRowIcons[3]))
-            {
-                isEditing = false;
-                targetScrollPositionY = 0;
-                scrollPosition.y = 0;
-                //previousMiddleIndex = currentMiddleIndex;
-                currentMiddleIndex = 3;
+            //if (GUI.Button(new Rect(Screen.width - Screen.width / 8, Screen.height - 71, 70, 70), bottomRowIcons[3]))
+            //{
+            //    isEditing = false;
+            //    targetScrollPositionY = 0;
+            //    scrollPosition.y = 0;
+            //    //previousMiddleIndex = currentMiddleIndex;
+            //    currentMiddleIndex = 3;
 
-                GUI.FocusWindow(0);
-            }
+            //    GUI.FocusWindow(0);
+            //}
         }
     }
     // focus window on login rect
@@ -1496,8 +1541,13 @@ public class GUIManager : MonoBehaviour
             WWW www = new WWW(url);
             yield return www;
             Debug.Log(url);
-            if (www.texture)
-                selectedRecipeImage = www.texture;
+            if (www.error == null)
+            {
+                if (www.texture != null)
+                    selectedRecipeImage = www.texture;
+            }
+            else
+                selectedRecipeImage = null;
         }
         else
             yield return new WaitForEndOfFrame();
