@@ -138,9 +138,6 @@ public class GUIManager : MonoBehaviour
     void Awake()
     {
         instance = this;
-        
-
-
 
         if (Advertisement.isSupported)
         {
@@ -156,6 +153,7 @@ public class GUIManager : MonoBehaviour
         int firstTime = PlayerPrefs.GetInt("isFirstTime");
         if (firstTime == 1)
             isFirstTime = false;
+        //isFirstTime = true;
 
         currentGUISkinIndex = 0;// PlayerPrefs.GetInt("currentSkin");
         ChangeGUIIndex(currentGUISkinIndex);
@@ -163,9 +161,14 @@ public class GUIManager : MonoBehaviour
         RecipeMaker.instance.GetAuthor();
 		if (adManager.IsAdsRunning()) 
 		{
-            middleWindow = new Rect(5, 95 + 30, Screen.width - 40, Screen.height - (0 + 80 + 85) - 30);
-            middleWindowNonSort = new Rect(-2, 95 + 25, Screen.width, Screen.height - (0 + 80 + 75) - 30);
-            topRowRect = new Rect(Screen.width - 34, 85 + 30, 33, Screen.height - 85 - 30);
+            //middleWindow = new Rect(5, 95 + 30, Screen.width - 40, Screen.height - (0 + 80 + 85) - 30);
+            //middleWindowNonSort = new Rect(-2, 95 + 25, Screen.width, Screen.height - (0 + 80 + 75) - 30);
+            //topRowRect = new Rect(Screen.width - 34, 85 + 30, 33, Screen.height - 85 - 30);
+
+            middleWindowNonSort = new Rect(-2, 25, Screen.width + 5, Screen.height - (0 + 84) - 10);
+            middleWindow = new Rect(-2, 25, Screen.width - 30, Screen.height - (0 + 76) - 18);
+
+            topRowRect = new Rect(Screen.width - 34, 0 + 48, 33, Screen.height - 122);
 		} 
 		else 
 		{
@@ -253,7 +256,9 @@ public class GUIManager : MonoBehaviour
 
         if (previousSwipePosition == scrollPosition)
         {
-            IncreaseTouchCount();
+            if (adManager.IsAdsRunning())
+                IncreaseTouchCount();
+
             isPressed = true;
         }
 
@@ -1489,7 +1494,8 @@ public class GUIManager : MonoBehaviour
             {
                 case 1:
                     //if (GUI.Button(new Rect(4 + 0 * (Screen.width / 4 - 10), Screen.height - 65, Screen.width / 4 - 10, 60), bottomRowIcons[0]))
-                    if (GUI.Button(new Rect(4 + 0 * (Screen.width / 8 - 10), Screen.height - 71, 70, 70), bottomRowIcons[0]))
+                    //if (GUI.Button(new Rect(4 + 0 * (Screen.width / 8 - 10), Screen.height - 71, 70, 70), bottomRowIcons[0]))
+                    if (GUI.Button(new Rect(((Screen.width / 4)) + (0 * (Screen.width / 4) / 2), Screen.height - 71, 70, 70), bottomRowIcons[0]))
                     {
                         tutorialIndex++;
 
@@ -1504,7 +1510,8 @@ public class GUIManager : MonoBehaviour
                     break;
                 case 3:
                     //if (GUI.Button(new Rect(4 + 2 * (Screen.width / 4 - 10), Screen.height - 65, Screen.width / 4 - 10, 60), bottomRowIcons[2]))
-                    if (GUI.Button(new Rect(4 + 2 * (Screen.width / 8 - 10), Screen.height - 71, 70, 70), bottomRowIcons[2]))
+                    //if (GUI.Button(new Rect(4 + 2 * (Screen.width / 8 - 10), Screen.height - 71, 70, 70), bottomRowIcons[2]))
+                    if (GUI.Button(new Rect(((Screen.width / 4)) + (2 * (Screen.width / 4) / 2), Screen.height - 71, 70, 70), bottomRowIcons[2]))
                     {
                         tutorialIndex++;
 
@@ -1528,7 +1535,8 @@ public class GUIManager : MonoBehaviour
                     //GUI.Box(new Rect(0, Screen.height - 70, Screen.width, 80), "");
 
                     //if (GUI.Button(new Rect(4 + 3 * (Screen.width / 4 - 10), Screen.height - 65, Screen.width / 4 - 10, 60), bottomRowIcons[3]))
-                    if (GUI.Button(new Rect(Screen.width - Screen.width / 8, Screen.height - 71, 70, 70), bottomRowIcons[3]))
+                    //if (GUI.Button(new Rect(Screen.width - Screen.width / 8, Screen.height - 71, 70, 70), bottomRowIcons[3]))
+                    if (GUI.Button(new Rect(((Screen.width / 4)) + (3 * (Screen.width / 4) / 2), Screen.height - 71, 70, 70), bottomRowIcons[3]))
                     {
                         tutorialIndex++;
 

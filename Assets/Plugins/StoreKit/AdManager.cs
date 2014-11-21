@@ -17,9 +17,9 @@ public class AdManager : MonoBehaviour {
             #if UNITY_IPHONE
             if(bannerIsEnabled == 0)
             {
-			    banner = new ADBannerView (ADBannerView.Type.Banner, ADBannerView.Layout.Top);
-			    ADBannerView.onBannerWasClicked += OnBannerClicked;
-			    ADBannerView.onBannerWasLoaded += OnBannerLoaded;
+			    //banner = new ADBannerView (ADBannerView.Type.Banner, ADBannerView.Layout.Top);
+			    //ADBannerView.onBannerWasClicked += OnBannerClicked;
+			    //ADBannerView.onBannerWasLoaded += OnBannerLoaded;
             }
 			else
 			{
