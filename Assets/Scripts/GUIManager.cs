@@ -485,11 +485,13 @@ public class GUIManager : MonoBehaviour
                         if (!RecipeMaker.instance.DropDown())
                         {
                             initRecipeList = false;
+                            sortRecipes = false;
                             PantryManager.RemoveFromMyPantry(RecipeManager.allIngridents[i]);
                         }
                         else
                         {
                             initRecipeList = false;
+                            sortRecipes = false;
                             RecipeMaker.instance.AddToCreateRecipe(i);
                         }
                     }
@@ -504,11 +506,13 @@ public class GUIManager : MonoBehaviour
                         if (!RecipeMaker.instance.DropDown())
                         {
                             initRecipeList = false;
+                            sortRecipes = false;
                             PantryManager.AddToMyPantry(RecipeManager.allIngridents[i]);
                         }
                         else
                         {
                             initRecipeList = false;
+                            sortRecipes = false;
                             RecipeMaker.instance.AddToCreateRecipe(i);
                         }
                     }
@@ -543,6 +547,7 @@ public class GUIManager : MonoBehaviour
             if (GUI.Button(new Rect(middleWindowNonSort.width - 109, 79 * i, 75, 75), xCheck))
             {
                 initRecipeList = false;
+                sortRecipes = false;
                 PantryManager.RemoveFromMyPantry(i);
             }
         }
@@ -1386,7 +1391,7 @@ public class GUIManager : MonoBehaviour
             allSortedList = RecipeManager.allRecipes.OrderByDescending(c => c.percent).ThenBy(c => c.title).ToList();
         }
 
-        percentSortAssend = !percentSortAssend;
+        //percentSortAssend = !percentSortAssend;
     }
 
     // load all information into user (pantry, liked, grocey list)
@@ -1566,12 +1571,13 @@ public class GUIManager : MonoBehaviour
                         {
                             allSortedList[ii].SetPercent(RecipeManager.ReturnPercentOfRecipe(allSortedList[ii].id));
                         }
+                    }
 
-                        if (!sortRecipes)
-                        {
-                            sortRecipes = true;
-                            SortByPercent();
-                        }
+
+                    if (!sortRecipes)
+                    {
+                        sortRecipes = true;
+                        SortByPercent();
                     }
 
                     isEditing = false;
