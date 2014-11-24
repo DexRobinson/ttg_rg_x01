@@ -114,7 +114,8 @@ public class GUIManager : MonoBehaviour
     {
 #if UNITY_IPHONE || UNITY_ANDROID
         //string productId = "19763";
-        touchCount++;
+        if(adManager.IsAdsRunning())
+            touchCount++;
 #endif
         if (touchCount > touchRate)
         {
@@ -505,12 +506,14 @@ public class GUIManager : MonoBehaviour
                         {
                             initRecipeList = false;
                             sortRecipes = false;
+                            IncreaseTouchCount();
                             PantryManager.RemoveFromMyPantry(RecipeManager.allIngridents[i]);
                         }
                         else
                         {
                             initRecipeList = false;
                             sortRecipes = false;
+                            IncreaseTouchCount();
                             RecipeMaker.instance.AddToCreateRecipe(i);
                         }
                     }
@@ -526,12 +529,14 @@ public class GUIManager : MonoBehaviour
                         {
                             initRecipeList = false;
                             sortRecipes = false;
+                            IncreaseTouchCount();
                             PantryManager.AddToMyPantry(RecipeManager.allIngridents[i]);
                         }
                         else
                         {
                             initRecipeList = false;
                             sortRecipes = false;
+                            IncreaseTouchCount();
                             RecipeMaker.instance.AddToCreateRecipe(i);
                         }
                     }
@@ -567,6 +572,7 @@ public class GUIManager : MonoBehaviour
             {
                 initRecipeList = false;
                 sortRecipes = false;
+                IncreaseTouchCount();
                 PantryManager.RemoveFromMyPantry(i);
             }
         }
@@ -726,6 +732,8 @@ public class GUIManager : MonoBehaviour
 
         if (GUILayout.Button("< Previous 10", leftAlign, GUILayout.Height(70)))
         {
+            IncreaseTouchCount();
+
             if (currentRecipeMin > 0)
             {
                 currentRecipeMin -= 10;
@@ -739,6 +747,8 @@ public class GUIManager : MonoBehaviour
         }
         if (GUILayout.Button("Next 10 >", rightAlign, GUILayout.Height(70)))
         {
+            IncreaseTouchCount();
+
             if (currentRecipeMax <= allSortedList.Count)
             {
                 currentRecipeMin += 10;
@@ -812,6 +822,8 @@ public class GUIManager : MonoBehaviour
 		//GUI.skin = pantrySkin;
         if (GUILayout.Button("< Back", GUILayout.Height(44)))
         {
+            IncreaseTouchCount();
+
             currentMiddleIndex = 2;
             scrollPosition = oldRecipePositionIndex;
         }
@@ -830,6 +842,8 @@ public class GUIManager : MonoBehaviour
 
         if (GUILayout.Button("Cook", GUILayout.Height(44)))
         {
+            IncreaseTouchCount();
+
             for (int i = 0; i < RecipeManager.allRecipes[recipeSelected].ings.Count; i++)
             {
                 if (!PantryManager.myIngridents.Contains(RecipeManager.allRecipes[recipeSelected].ings[i]))
@@ -847,6 +861,8 @@ public class GUIManager : MonoBehaviour
 		{
 			if (GUILayout.Button ("Unlike", GUILayout.Height (44))) 
 			{
+                IncreaseTouchCount();
+
 				PantryManager.RemoveFromLikedRecipes(RecipeManager.allRecipes[recipeSelected].id);
                 PantryManager.SaveNoCheck();
 			}
@@ -855,6 +871,8 @@ public class GUIManager : MonoBehaviour
 		{
 			if (GUILayout.Button ("Like", GUILayout.Height(44))) 
 			{
+                IncreaseTouchCount();
+
 				PantryManager.AddToLikeRecipes(RecipeManager.allRecipes[recipeSelected].id);
                 PantryManager.SaveNoCheck();
 			}
@@ -1113,6 +1131,8 @@ public class GUIManager : MonoBehaviour
             GUI.Label(new Rect(5, 79 * i, middleWindowNonSort.width - 117, 75), PantryManager.neededIngridents[i].name);
             if (GUI.Button(new Rect(middleWindowNonSort.width - 109, 79 * i, 75, 75), xCheck))
             {
+                IncreaseTouchCount();
+
                 PantryManager.RemoveFromNeededPantry(i);
             }
         }
