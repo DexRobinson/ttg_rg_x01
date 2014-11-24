@@ -265,7 +265,7 @@ public class LoginGUI : MonoBehaviour {
                 regestring = true;
             }
 
-            GUI.Label(ReturnRect(reportingRect), loginText);
+            GUI.Box(ReturnRect(reportingRect), loginText);
 
             if (!setfocus)
             {
@@ -459,7 +459,7 @@ public class LoginGUI : MonoBehaviour {
             if (!isLoggedIn)
                 DrawLogin();
 
-            GUI.Box(new Rect(0, 0, Screen.width + 5, 50), "Login");
+            //GUI.Box(new Rect(0, 0, Screen.width + 5, 50), "Login");
         }
         else
         {

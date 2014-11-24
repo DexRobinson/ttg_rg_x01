@@ -35,9 +35,20 @@ public class RecipeMaker : MonoBehaviour {
     private int recipeCount = 0;
     private int recipeLoaded = 0;
 
+    private int descWidth = 120;
+
     void Awake()
     {
         instance = this;
+
+        if (Screen.height > 1024)
+        {
+            descWidth = 220;
+        }
+        else
+        {
+            descWidth = 120;
+        }
     }
 
     void Start()
@@ -56,46 +67,48 @@ public class RecipeMaker : MonoBehaviour {
         //GUI.Label(new Rect(10, 35, 200, buttonH), "Author: ");
         //author = GUI.TextField(new Rect(215, 35, 200, buttonH), author, 50);
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Title: ",  GUILayout.Width(120));
+
+
+        GUILayout.Label("Title: ", GUILayout.Width(descWidth));
         title = GUILayout.TextField(title, 50);
         title = Regex.Replace(title, @"[^a-zA-Z0-9  .\-:;,]", "");
         GUILayout.EndHorizontal();
 
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Author: ",  GUILayout.Width(120));
+        GUILayout.Label("Author: ", GUILayout.Width(descWidth));
         author = GUILayout.TextField(author, 30);
         author = Regex.Replace(author, @"[^a-zA-Z0-9  .\-:;]", "");
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Website: ", GUILayout.Width(120));
+        GUILayout.Label("Website: ", GUILayout.Width(descWidth));
         website = GUILayout.TextField(website, 1024);
 		website = Regex.Replace(website, @"[^a-zA-Z0-9 / .\-:;]", "");
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Image URL: ", GUILayout.Width(120));
+        GUILayout.Label("Image URL: ", GUILayout.Width(descWidth));
         imageUrl = GUILayout.TextField(imageUrl, 1024);
 		imageUrl = Regex.Replace(imageUrl, @"[^a-zA-Z0-9 / .\-:;]", "");
         GUILayout.EndHorizontal();
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Prep Time:", GUILayout.Width(120));
+        GUILayout.Label("Prep Time:", GUILayout.Width(descWidth));
         prep = GUILayout.TextField(prep, 20);
         prep = Regex.Replace(prep, @"[^0-9]", "");
         GUILayout.EndHorizontal();
 
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Cook Time:",  GUILayout.Width(120));
+        GUILayout.Label("Cook Time:", GUILayout.Width(descWidth));
         cook = GUILayout.TextField(cook, 20);
         cook = Regex.Replace(cook, @"[^0-9]", "");
         GUILayout.EndHorizontal();
 
 
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Description: ", GUILayout.Width(120));
+        GUILayout.Label("Description: ", GUILayout.Width(descWidth));
         desc = GUILayout.TextField(desc, 1024);
         desc = Regex.Replace(desc, @"[^a-zA-Z0-9  .\-:;,]", "");
         GUILayout.EndHorizontal();

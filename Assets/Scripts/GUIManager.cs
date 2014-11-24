@@ -295,6 +295,8 @@ public class GUIManager : MonoBehaviour
             allSkins.Add(likedRecipeSkin);
             allSkins.Add(recipePickerTopSkin);
             allSkins.Add(storeSkin);
+            allSkins.Add(recipeSortingSkin);
+
             allSkins.Add(tutorialSkin);
             allSkins.Add(LoginGUI.instance.loginSkin);
             allSkins.Add(LoginGUI.instance.signupSkin);
@@ -308,6 +310,14 @@ public class GUIManager : MonoBehaviour
                 allSkins[i].textField.font = retinaFont;
                 allSkins[i].textArea.font = retinaFont;
             }
+
+            leftAlign.font = retinaFont;
+            rightAlign.font = retinaFont;
+            centerAlign.font = retinaFont;
+
+            leftAlign.fontSize = 36;
+            rightAlign.fontSize = 36;
+            centerAlign.fontSize = 36;
         }
         else
         {
@@ -319,6 +329,7 @@ public class GUIManager : MonoBehaviour
             allSkins.Add(gotIngSkin);
             allSkins.Add(settingsSkin);
             allSkins.Add(recipePickerSkin);
+            allSkins.Add(recipeSortingSkin);
             allSkins.Add(addIngSkin);
             allSkins.Add(bottomRowSkin);
             allSkins.Add(recipeCreateSkin);
@@ -338,6 +349,14 @@ public class GUIManager : MonoBehaviour
                 allSkins[i].textField.font = normalFont;
                 allSkins[i].textArea.font = normalFont;
             }
+
+            leftAlign.font = normalFont;
+            rightAlign.font = normalFont;
+            centerAlign.font = normalFont;
+
+            centerAlign.fontSize = 20;
+            leftAlign.fontSize = 20;
+            rightAlign.fontSize = 20;
         }
 
         //pantrySkin = pantrySkinList[newIndex];
@@ -571,7 +590,7 @@ public class GUIManager : MonoBehaviour
         for (int i = 0; i < myUploadedRecipesTitles.Count; i++)
         {
             //if (GUI.Button(new Rect(5, 45 * i, middleWindow.width - 40, 44), myUploadedRecipesTitles[i]))
-            if (GUILayout.Button(myUploadedRecipesTitles[i], GUILayout.Height(44)))
+            if (GUILayout.Button(myUploadedRecipesTitles[i]))
             {
                 if (ReturnButtonPress())
                 {
@@ -671,6 +690,8 @@ public class GUIManager : MonoBehaviour
     private int currentRecipeMax = 10;
     public GUIStyle leftAlign;
     public GUIStyle rightAlign;
+    public GUIStyle centerAlign;
+
 
     // recipe pages
     void DrawRecipe()
@@ -703,11 +724,10 @@ public class GUIManager : MonoBehaviour
         //    SortByPercent();
         //}
 
-        if (GUILayout.Button("< Previous 10", leftAlign, GUILayout.Height(40)))
+        if (GUILayout.Button("< Previous 10", leftAlign, GUILayout.Height(70)))
         {
             if (currentRecipeMin > 0)
             {
-                
                 currentRecipeMin -= 10;
                 currentRecipeMax -= 10;
 
@@ -717,7 +737,7 @@ public class GUIManager : MonoBehaviour
                     currentRecipeMax = 10;
             }
         }
-        if (GUILayout.Button("Next 10 >", rightAlign, GUILayout.Height(40)))
+        if (GUILayout.Button("Next 10 >", rightAlign, GUILayout.Height(70)))
         {
             if (currentRecipeMax <= allSortedList.Count)
             {
@@ -745,7 +765,7 @@ public class GUIManager : MonoBehaviour
 	            GUILayout.Label(RecipeManager.ReturnPercentOfRecipe(allSortedList[i].id).ToString("f0") + "%");
 
 	            //if (GUI.Button(new Rect(5, 45 * i, middleWindow.width - 40, 44), allSortedList[i].title))
-	            if(GUILayout.Button(allSortedList[i].title, GUILayout.Height(70)))
+	            if(GUILayout.Button(allSortedList[i].title))
 	            {
 	                if (ReturnButtonPress())
 	                {
@@ -846,7 +866,7 @@ public class GUIManager : MonoBehaviour
 		GUI.skin = recipeSkin;
 
         GUILayout.Label("Author: " + RecipeManager.allRecipes[recipeSelected].author);
-        if (GUILayout.Button("Link to Website     >"))
+        if (GUILayout.Button("Link to Website     >", centerAlign))
         {
             Application.OpenURL(RecipeManager.allRecipes[recipeSelected].url);
         }
@@ -869,7 +889,7 @@ public class GUIManager : MonoBehaviour
 
         GUILayout.Label("Description: " + desc + "");
 
-        GUILayout.Box("");
+        GUILayout.Label("");
 
         GUILayout.Label("Ingredients");
 
@@ -880,7 +900,21 @@ public class GUIManager : MonoBehaviour
             
             GUILayout.BeginHorizontal();
             //GUI.skin = recipeSkin;
-            GUILayout.Label(RecipeManager.allRecipes[recipeSelected].ingredientsAmount[i].ToString(), GUILayout.Width(130));
+
+            if (Screen.height > 1024)
+            {
+                GUILayout.Label(RecipeManager.allRecipes[recipeSelected].ingredientsAmount[i].ToString(), GUILayout.Width(260));
+            }
+            else
+            {
+                GUILayout.Label(RecipeManager.allRecipes[recipeSelected].ingredientsAmount[i].ToString(), GUILayout.Width(130));
+            }
+            
+            //GUILayout.Label(String.Format("{0, -40} | {1}",
+                    //RecipeManager.allRecipes[recipeSelected].ingredientsAmount[i].ToString(), RecipeManager.allRecipes[recipeSelected].ings[i].name));
+
+            //GUILayout.Label(RecipeManager.allRecipes[recipeSelected].ingredientsAmount[i].ToString().PadRight(15) + "|" + RecipeManager.allRecipes[recipeSelected].ings[i].name);
+                
             
             // need something here later to highlight what ingredients we still need
             //if (ReturnIfHaveIngridentName(RecipeManager.allRecipes[recipeSelected].ingredients[i]))
@@ -892,8 +926,8 @@ public class GUIManager : MonoBehaviour
 
                 GUILayout.BeginHorizontal();
 
-                GUILayout.Box(RecipeManager.allRecipes[recipeSelected].ings[i].name);
-                GUILayout.Box(checkMark, GUILayout.Width(70));
+                GUILayout.Label(RecipeManager.allRecipes[recipeSelected].ings[i].name);
+                GUILayout.Label(checkMark, GUILayout.Width(70));
 
                 GUILayout.EndHorizontal();
             }
@@ -903,9 +937,9 @@ public class GUIManager : MonoBehaviour
                 //GUI.skin = nonIngSkin;
 
                 GUILayout.BeginHorizontal();
-
-                GUILayout.Box(RecipeManager.allRecipes[recipeSelected].ings[i].name);
-                GUILayout.Box(xCheck, GUILayout.Width(70));
+                GUILayout.Label(RecipeManager.allRecipes[recipeSelected].ings[i].name);
+                //GUILayout.Box(RecipeManager.allRecipes[recipeSelected].ings[i].name);
+                GUILayout.Label(xCheck, GUILayout.Width(70));
 
                 GUILayout.EndHorizontal();
                 
@@ -918,7 +952,7 @@ public class GUIManager : MonoBehaviour
         }
 
         //GUI.skin = recipeSkin;
-        GUILayout.Box("");
+        GUILayout.Label("");
         GUILayout.Label("Steps");
 
         for (int i = 0; i < RecipeManager.allRecipes[recipeSelected].steps.Count; i++)
@@ -1124,7 +1158,7 @@ public class GUIManager : MonoBehaviour
     {
         GUILayout.Label("Help us improve this application!");
 
-		if (GUILayout.Button("Unlock Ultimate Version($0.99 USD)", GUILayout.Height(120)))
+		if (GUILayout.Button("Unlock Ultimate Version($0.99 USD)", centerAlign))
         {
 			// remove ads for 0.99 = ~2k-4k ads per user
             // 500-4000 mins of ads @ 5 mins/day = 100-800 days(~2 years)
@@ -1142,7 +1176,7 @@ public class GUIManager : MonoBehaviour
 			OpenStore();
 		}*/
 
-        if (GUILayout.Button("Back"))
+        if (GUILayout.Button("Back", centerAlign))
         {
             currentMiddleIndex = 3;
         }
@@ -1500,7 +1534,8 @@ public class GUIManager : MonoBehaviour
                 case 1:
                     //if (GUI.Button(new Rect(4 + 0 * (Screen.width / 4 - 10), Screen.height - 65, Screen.width / 4 - 10, 60), bottomRowIcons[0]))
                     //if (GUI.Button(new Rect(4 + 0 * (Screen.width / 8 - 10), Screen.height - 71, 70, 70), bottomRowIcons[0]))
-                    if (GUI.Button(new Rect(((Screen.width / 4)) + (0 * (Screen.width / 4) / 2), Screen.height - 71, 70, 70), bottomRowIcons[0]))
+                    //if (GUI.Button(new Rect(((Screen.width / 4)) + (0 * (Screen.width / 4) / 2), Screen.height - 71, 70, 70), bottomRowIcons[0]))
+                    if (GUI.Button(new Rect((Screen.width / bottomRowIcons.Length * .25f) + (0 * Screen.width / bottomRowIcons.Length), Screen.height - 73, 78, 78), bottomRowIcons[0]))
                     {
                         tutorialIndex++;
 
@@ -1516,7 +1551,8 @@ public class GUIManager : MonoBehaviour
                 case 3:
                     //if (GUI.Button(new Rect(4 + 2 * (Screen.width / 4 - 10), Screen.height - 65, Screen.width / 4 - 10, 60), bottomRowIcons[2]))
                     //if (GUI.Button(new Rect(4 + 2 * (Screen.width / 8 - 10), Screen.height - 71, 70, 70), bottomRowIcons[2]))
-                    if (GUI.Button(new Rect(((Screen.width / 4)) + (2 * (Screen.width / 4) / 2), Screen.height - 71, 70, 70), bottomRowIcons[2]))
+                    //if (GUI.Button(new Rect(((Screen.width / 4)) + (2 * (Screen.width / 4) / 2), Screen.height - 71, 70, 70), bottomRowIcons[2]))
+                    if (GUI.Button(new Rect((Screen.width / bottomRowIcons.Length * .25f) + (2 * Screen.width / bottomRowIcons.Length), Screen.height - 73, 78, 78), bottomRowIcons[2]))
                     {
                         tutorialIndex++;
 
@@ -1541,7 +1577,8 @@ public class GUIManager : MonoBehaviour
 
                     //if (GUI.Button(new Rect(4 + 3 * (Screen.width / 4 - 10), Screen.height - 65, Screen.width / 4 - 10, 60), bottomRowIcons[3]))
                     //if (GUI.Button(new Rect(Screen.width - Screen.width / 8, Screen.height - 71, 70, 70), bottomRowIcons[3]))
-                    if (GUI.Button(new Rect(((Screen.width / 4)) + (3 * (Screen.width / 4) / 2), Screen.height - 71, 70, 70), bottomRowIcons[3]))
+                    //if (GUI.Button(new Rect(((Screen.width / 4)) + (3 * (Screen.width / 4) / 2), Screen.height - 71, 70, 70), bottomRowIcons[3]))
+                    if (GUI.Button(new Rect((Screen.width / bottomRowIcons.Length * .25f) + (3 * Screen.width / bottomRowIcons.Length), Screen.height - 73, 78, 78), bottomRowIcons[3]))
                     {
                         tutorialIndex++;
 
@@ -1558,11 +1595,12 @@ public class GUIManager : MonoBehaviour
         }
         else
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < bottomRowIcons.Length; i++)
             {
                 //if (GUI.Button(new Rect(4 + i * (Screen.width / 4 - 10), Screen.height - 72, Screen.width / 4 - 10, 72), ReturnBotRowNames(i)))
                 //if (GUI.Button(new Rect(4 + i * (Screen.width / 8 - 10), Screen.height - 71, 70, 70), bottomRowIcons[i]))
-                if (GUI.Button(new Rect(((Screen.width / 4)) + (i * (Screen.width / 4) / 2), Screen.height - 71, 70, 70), bottomRowIcons[i]))
+                //if (GUI.Button(new Rect((Screen.width / bottomRowIcons.Length * .5f) + (i * Screen.width / bottomRowIcons.Length), Screen.height - 73, 78, 78), bottomRowIcons[i]))
+                if (GUI.Button(new Rect((Screen.width / bottomRowIcons.Length * .25f) + (i * Screen.width / bottomRowIcons.Length), Screen.height - 73, 78, 78), bottomRowIcons[i]))
                 {
                     if (i == 2 && !initRecipeList)
                     {
