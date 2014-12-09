@@ -139,6 +139,7 @@ public class GUIManager : MonoBehaviour
     void Awake()
     {
         instance = this;
+        Application.targetFrameRate = 60;
 
         if (Advertisement.isSupported)
         {
@@ -1195,6 +1196,14 @@ public class GUIManager : MonoBehaviour
 			// have a donate button for a buck
 			OpenStore();
 		}*/
+
+        if (GUILayout.Button("Restore Purchase", centerAlign))
+        {
+            // remove ads for 0.99 = ~2k-4k ads per user
+            // 500-4000 mins of ads @ 5 mins/day = 100-800 days(~2 years)
+            //BuyInAppPurchase(0);
+            StoreKitBinding.restoreCompletedTransactions();
+        }
 
         if (GUILayout.Button("Back", centerAlign))
         {
