@@ -220,6 +220,15 @@ public class GUIManager : MonoBehaviour
         }
     }
 
+
+
+    // testing
+    private float scrollVelocity = 0f;
+    public float inertiaDuration = 0.75f;
+    private float timeTouchPhaseEnded = 0f;
+    private int selected = -1;
+
+
     void Update()
     {
 #if UNITY_WEBPLAYER || UNITY_EDITOR
@@ -248,7 +257,51 @@ public class GUIManager : MonoBehaviour
             updateTimerForSwipe = Time.time + 0.5f;
         }
 
+        if (targetScrollPositionY < 0)
+            targetScrollPositionY = 0;
+
 		scrollPosition = Vector2.Lerp (scrollPosition, new Vector2 (0, targetScrollPositionY), swipeVelocity * Time.deltaTime);
+
+
+        // testing
+        //if (Input.touchCount > 0)
+        //{
+        //    Touch touch = Input.touches[0];
+        //    if (touch.phase == TouchPhase.Began)
+        //    {
+        //        scrollVelocity = 0.0f;
+        //    }
+        //    else if (touch.phase == TouchPhase.Canceled)
+        //    {
+        //        selected = -1;
+        //    }
+        //    else if (touch.phase == TouchPhase.Moved)
+        //    {
+        //        selected = -1;
+        //        scrollPosition.y -= touch.deltaPosition.y;
+        //    }
+        //    else if (touch.phase == TouchPhase.Ended)
+        //    {
+        //        if (selected > -1)
+        //        {
+
+        //        }
+        //        else
+        //        {
+        //            if (Mathf.Abs(touch.deltaPosition.y) <= .0)
+        //                scrollVelocity = (int)(touch.deltaPosition.y / touch.deltaTime);
+
+        //            timeTouchPhaseEnded = Time.time;
+        //        }
+        //    }
+        //}
+
+
+
+
+
+
+
     }
 
     // checks to make sure that the user has pressed the button and they arent trying to scroll instead
@@ -1177,6 +1230,7 @@ public class GUIManager : MonoBehaviour
     }
     void DonatePage(int id)
     {
+#if UNITY_IPHONE || UNITY_EDITOR
         GUILayout.Label("Help us improve this application!");
 
 		if (GUILayout.Button("Unlock Ultimate Version($0.99 USD)", centerAlign))
@@ -1209,6 +1263,15 @@ public class GUIManager : MonoBehaviour
         {
             currentMiddleIndex = 3;
         }
+#endif
+
+#if UNITY_ANDROID 
+        GUILayout.Label("Store comming soon!");
+        if (GUILayout.Button("Back", centerAlign))
+        {
+            currentMiddleIndex = 3;
+        }
+#endif
     }
 
     // feedback page
@@ -1417,10 +1480,10 @@ public class GUIManager : MonoBehaviour
         
 
         scrollPosition.y = 0;
-        //targetScrollPositionY = 0;
+        targetScrollPositionY = 0;
 
         scrollPosition.y = yPosition * 79;
-        //targetScrollPositionY = yPosition * 79;
+        targetScrollPositionY = yPosition * 79;
         GUI.FocusWindow(0);
     }
     // sort by name

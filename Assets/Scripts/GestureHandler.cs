@@ -20,11 +20,31 @@ public class GestureHandler : MonoBehaviour {
 
 	void OnSwipe(SwipeGesture gesture)
 	{
-		//Debug.Log (gesture.Velocity);
-		//guiManager.swipeVelocity = gesture.Velocity * 0.003f;
+        float velocity = -gesture.Velocity;
+        float move = gesture.Move.y;
+        
+        if (gesture.Direction == FingerGestures.SwipeDirection.Up ||
+            gesture.Direction == FingerGestures.SwipeDirection.UpperDiagonals ||
+            gesture.Direction == FingerGestures.SwipeDirection.UpperLeftDiagonal ||
+            gesture.Direction == FingerGestures.SwipeDirection.UpperRightDiagonal ||
+            gesture.Direction == FingerGestures.SwipeDirection.Vertical)
+        {
+            velocity = gesture.Velocity;
+            move = gesture.Move.y;
+        }
 
-		//guiManager.targetScrollPositionY = guiManager.ScrollPosition.y + (gesture.Move.y + (gesture.Velocity * 0.3f));
+        Debug.Log("Swipe Velocity: " + velocity);
+        Debug.Log("Move: " + move);
 
-		//guiManager.ScrollPosition = new Vector2(0, guiManager.ScrollPosition.y + gesture.Move.y);
+        float ratio = Mathf.Abs(velocity) / Mathf.Abs(move);
+        Debug.Log("Ratio: " + ratio);
+
+        if (Mathf.Abs(velocity) > 1000 && ratio > 5)
+        {
+            guiManager.swipeVelocity = gesture.Velocity * 0.003f;
+
+            guiManager.targetScrollPositionY = guiManager.ScrollPosition.y + (move + (velocity * 0.3f));
+        }
+        //guiManager.ScrollPosition = new Vector2(0, guiManager.ScrollPosition.y + gesture.Move.y);
 	}
 }
