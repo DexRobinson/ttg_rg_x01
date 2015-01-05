@@ -44,6 +44,7 @@ public class GestureHandler : MonoBehaviour {
             guiManager.swipeVelocity = gesture.Velocity * 0.003f;
 
             guiManager.targetScrollPositionY = guiManager.ScrollPosition.y + (move + (velocity * 0.3f));
+            guiManager.targetScrollPositionY = Mathf.Clamp(guiManager.targetScrollPositionY, 0, maxDistance);
         }
         //guiManager.ScrollPosition = new Vector2(0, guiManager.ScrollPosition.y + gesture.Move.y);
 	}

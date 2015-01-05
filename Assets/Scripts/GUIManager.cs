@@ -1038,6 +1038,13 @@ public class GUIManager : MonoBehaviour
 
     bool ReturnIfHaveIngridentName( Ing ing )
     {
+        //if (PantryManager.myIngridents.Contains(ing))
+        //    return true;
+
+        //return false;
+
+
+
         for (int i = 0; i < PantryManager.myIngridents.Count; i++)
         {
             if (PantryManager.myIngridents[i].id == ing.id)
@@ -1047,6 +1054,9 @@ public class GUIManager : MonoBehaviour
         }
 
         return false;
+
+
+
 
         //if (PantryManager.myIngridents)
         //{
@@ -1256,7 +1266,8 @@ public class GUIManager : MonoBehaviour
             // remove ads for 0.99 = ~2k-4k ads per user
             // 500-4000 mins of ads @ 5 mins/day = 100-800 days(~2 years)
             //BuyInAppPurchase(0);
-            StoreKitBinding.restoreCompletedTransactions();
+            if(StoreKitBinding.canMakePayments())
+                StoreKitBinding.restoreCompletedTransactions();
         }
 
         if (GUILayout.Button("Back", centerAlign))
