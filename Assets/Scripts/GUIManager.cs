@@ -1266,8 +1266,9 @@ public class GUIManager : MonoBehaviour
             // remove ads for 0.99 = ~2k-4k ads per user
             // 500-4000 mins of ads @ 5 mins/day = 100-800 days(~2 years)
             //BuyInAppPurchase(0);
-            if(StoreKitBinding.canMakePayments())
-                StoreKitBinding.restoreCompletedTransactions();
+            //if(StoreKitBinding.canMakePayments())
+            
+            StoreKitBinding.restoreCompletedTransactions();
         }
 
         if (GUILayout.Button("Back", centerAlign))
