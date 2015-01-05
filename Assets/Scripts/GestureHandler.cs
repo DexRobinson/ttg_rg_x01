@@ -14,8 +14,8 @@ public class GestureHandler : MonoBehaviour {
 	void OnDrag(DragGesture gesture) 
 	{
 		// Drag/displacement since last frame
-		guiManager.ScrollPosition += gesture.DeltaMove;
-		guiManager.targetScrollPositionY += gesture.DeltaMove.y;
+		guiManager.ScrollPosition += gesture.DeltaMove * 1.1f;
+        guiManager.targetScrollPositionY += gesture.DeltaMove.y * 1.1f;
 	}
 
 	void OnSwipe(SwipeGesture gesture)
@@ -39,7 +39,7 @@ public class GestureHandler : MonoBehaviour {
         float ratio = Mathf.Abs(velocity) / Mathf.Abs(move);
         Debug.Log("Ratio: " + ratio);
 
-        if (Mathf.Abs(velocity) > 1000 && ratio > 5)
+        if (Mathf.Abs(velocity) > 500)// && ratio > 5)
         {
             guiManager.swipeVelocity = gesture.Velocity * 0.003f;
 
@@ -48,4 +48,11 @@ public class GestureHandler : MonoBehaviour {
         }
         //guiManager.ScrollPosition = new Vector2(0, guiManager.ScrollPosition.y + gesture.Move.y);
 	}
+
+    void OnFingerUp( FingerUpEvent e )
+    {
+        // time the finger has been held down before being released
+        float elapsedTime = e.TimeHeldDown;
+        Debug.Log(elapsedTime.ToString());
+    }
 }
