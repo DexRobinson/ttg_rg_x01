@@ -60,6 +60,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\GUITouchScroll\GUITouchScroll.cs" />
     <Compile Include="Assets\Scripts\FingerMovement.cs" />
     <Compile Include="Assets\Scripts\GUIManager.cs" />
     <Compile Include="Assets\Scripts\GestureHandler.cs" />

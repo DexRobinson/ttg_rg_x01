@@ -7,6 +7,8 @@ Project("{23511327-943E-2DA5-9149-62ACDB920A53}") = "ttg_rg_x01", "Assembly-CSha
 EndProject
 Project("{23511327-943E-2DA5-9149-62ACDB920A53}") = "ttg_rg_x01", "Assembly-CSharp-Editor-firstpass.csproj", "{2362FB08-3CF4-375E-8894-B1D070604135}"
 EndProject
+Project("{23511327-943E-2DA5-9149-62ACDB920A53}") = "ttg_rg_x01", "Assembly-UnityScript.unityproj", "{2EAA2F1D-1F66-8953-9F96-043F7FE42DD6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,11 +27,15 @@ Global
 		{2362FB08-3CF4-375E-8894-B1D070604135}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2362FB08-3CF4-375E-8894-B1D070604135}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2362FB08-3CF4-375E-8894-B1D070604135}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EAA2F1D-1F66-8953-9F96-043F7FE42DD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EAA2F1D-1F66-8953-9F96-043F7FE42DD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EAA2F1D-1F66-8953-9F96-043F7FE42DD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EAA2F1D-1F66-8953-9F96-043F7FE42DD6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-																																							GlobalSection(MonoDevelopProperties) = preSolution
+																																									GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1

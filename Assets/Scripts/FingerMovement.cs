@@ -89,6 +89,12 @@ public class FingerMovement : MonoBehaviour {
                         moveAmount = GUIManager.instance.ScrollPosition.y;
 
                     //Debug.Log("Direction: " + direction + ", Velocity: " + velocity + ", Move Amt: " +  moveAmount);
+
+
+                    if(Mathf.Abs(touch.deltaPosition.y) >= 10)
+                    {
+                        velocity = (int)(touch.deltaPosition.y / touch.deltaTime);
+                    }
                 }
             }
 

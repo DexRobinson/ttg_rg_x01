@@ -295,13 +295,6 @@ public class GUIManager : MonoBehaviour
         //        }
         //    }
         //}
-
-
-
-
-
-
-
     }
 
     // checks to make sure that the user has pressed the button and they arent trying to scroll instead
