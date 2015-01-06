@@ -602,6 +602,7 @@ public class GUIManager : MonoBehaviour
                             IncreaseTouchCount();
                             myPantryItems[i].hasIngrident = true;
                             PantryManager.AddToMyPantry(RecipeManager.allIngridents[i]);
+                            //Debug.Log("ID: " + RecipeManager.allIngridents[i].id);
                         }
                         else
                         {
@@ -624,6 +625,20 @@ public class GUIManager : MonoBehaviour
         GUI.EndScrollView();
     }
 
+
+    void ChangePantry( Ing ing, bool have )
+    {
+        for (int i = 0; i < myPantryItems.Count; i++)
+        {
+            if (myPantryItems[i].index == ing.id)
+            {
+                myPantryItems[i].hasIngrident = have;
+                return;
+            }
+        }
+    }
+
+
     // my pantry pages
     void DrawMyPantry()
     {
@@ -644,8 +659,10 @@ public class GUIManager : MonoBehaviour
                 initRecipeList = false;
                 sortRecipes = false;
                 IncreaseTouchCount();
-                
-                myPantryItems[PantryManager.myIngridents[i].id].hasIngrident = false;
+                //Debug.Log("Remove: " + PantryManager.myIngridents[i].id);
+                //myPantryItems[PantryManager.myIngridents[i].id].hasIngrident = false;
+
+                ChangePantry(PantryManager.myIngridents[i], false);
                 PantryManager.RemoveFromMyPantry(i);
             }
         }

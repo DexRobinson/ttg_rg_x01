@@ -35,11 +35,11 @@ public class GestureHandler : MonoBehaviour {
             move = gesture.Move.y;
         }
 
-        Debug.Log("Swipe Velocity: " + velocity);
-        Debug.Log("Move: " + move);
+        //Debug.Log("Swipe Velocity: " + velocity);
+        //Debug.Log("Move: " + move);
 
         float ratio = Mathf.Abs(velocity) / Mathf.Abs(move);
-        Debug.Log("Ratio: " + ratio);
+        //Debug.Log("Ratio: " + ratio);
 
         if (Mathf.Abs(velocity) > 500 && ratio > 5)
         {

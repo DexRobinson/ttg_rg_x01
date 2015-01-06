@@ -583,7 +583,7 @@ public class LoginGUI : MonoBehaviour {
             loginText = ("There is an error: " + www.error);
         }
 
-        Debug.Log(www.text);
+        //Debug.Log(www.text);
     }
 
     public void Login()
