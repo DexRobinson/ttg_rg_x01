@@ -120,11 +120,12 @@ public class GUIManager : MonoBehaviour
         if (touchCount > touchRate)
         {
             Debug.Log("Ready to play ad");
-            if (Advertisement.isReady())
-            {
+            //if (Advertisement.isReady())
+            //{
                 touchCount = 0;
-                Advertisement.Show();
-            }
+                adManager.PlayFullScreenAd();
+                //Advertisement.Show();
+            //}
         }
     }
 	public Rect ReturnMiddleRect()
@@ -649,6 +650,10 @@ public class GUIManager : MonoBehaviour
     void DrawMyPantryWindow( int windowid )
     {
         scrollPosition = GUI.BeginScrollView(new Rect(0, 25, middleWindowNonSort.width - 5, middleWindowNonSort.height - 30), scrollPosition, new Rect(0, 0, 0, PantryManager.myIngridents.Count * 79));
+
+        while (middleWindow.x > 10)
+        {
+        }
 
         for (int i = 0; i < PantryManager.myIngridents.Count; i++)
         {
