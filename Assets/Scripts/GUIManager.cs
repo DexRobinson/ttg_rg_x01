@@ -126,6 +126,7 @@ public class GUIManager : MonoBehaviour
                 adManager.PlayFullScreenAd();
                 //Advertisement.Show();
             //}
+
         }
     }
 	public Rect ReturnMiddleRect()

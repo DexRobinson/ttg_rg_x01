@@ -69,7 +69,15 @@ public class AdManager : MonoBehaviour {
 
     public void PlayFullScreenAd()
     {
-        fullScreenAd.Show();
+        StartCoroutine(_PlayFullScreenAd());
+    }
+    private IEnumerator _PlayFullScreenAd()
+    {
+        while (!fullScreenAd.loaded)
+            yield return new WaitForEndOfFrame();
+
+        if (fullScreenAd.loaded)
+            fullScreenAd.Show();
     }
 
 #endif
