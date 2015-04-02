@@ -120,12 +120,12 @@ public class GUIManager : MonoBehaviour
         if (touchCount > touchRate)
         {
             Debug.Log("Ready to play ad");
-            //if (Advertisement.isReady())
-            //{
+            if (Advertisement.isReady())
+            {
                 touchCount = 0;
-                adManager.PlayFullScreenAd();
-                //Advertisement.Show();
-            //}
+                //adManager.PlayFullScreenAd();
+                Advertisement.Show();
+            }
 
         }
     }
