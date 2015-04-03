@@ -6,7 +6,7 @@ public class AdManager : MonoBehaviour {
 	private int bannerIsEnabled; // this is used to check if ads can be run using this...
 
 	#if UNITY_IPHONE
-	private ADBannerView banner = null;
+	private UnityEngine.iOS.ADBannerView banner = null;
     #endif
 
 	void Awake()

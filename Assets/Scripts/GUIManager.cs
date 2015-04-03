@@ -114,8 +114,11 @@ public class GUIManager : MonoBehaviour
     {
 #if UNITY_IPHONE || UNITY_ANDROID
         //string productId = "19763";
-        if(adManager.IsAdsRunning())
+        if (adManager.IsAdsRunning())
+        {
+            openPopUp = false;
             touchCount++;
+        }
 #endif
         if (touchCount > touchRate)
         {
@@ -123,6 +126,7 @@ public class GUIManager : MonoBehaviour
             if (Advertisement.isReady())
             {
                 touchCount = 0;
+                openPopUp = false;
                 Advertisement.Show();
             }
         }
@@ -175,7 +179,7 @@ public class GUIManager : MonoBehaviour
 		else 
 		{
             middleWindowNonSort = new Rect(-2, 25, Screen.width + 5 , Screen.height - (0 + 84) - 10);
-            middleWindow = new Rect(-2, 25, Screen.width - 30, Screen.height - (0 + 76) - 18);
+            middleWindow = new Rect(-2, 25, Screen.width - 30, Screen.height - (0 + 82) - 18);
 
             topRowRect = new Rect(Screen.width - 34, 0 + 48, 33, Screen.height - 122);
 		}
@@ -207,6 +211,8 @@ public class GUIManager : MonoBehaviour
             if(isFirstTime)
                 DrawTutorial();
 
+            
+
             SwitchMiddleArea(currentMiddleIndex);
 
 
@@ -215,7 +221,9 @@ public class GUIManager : MonoBehaviour
             GUI.skin = bottomRowSkin;
             GUI.Label(new Rect(0, 0, Screen.width, 50), titleOfPage);
 
-            
+            if (openPopUp)
+                DrawPopUpScreen();
+
             DrawBottomButtons();
         }
     }
@@ -228,6 +236,8 @@ public class GUIManager : MonoBehaviour
     private float timeTouchPhaseEnded = 0f;
     private int selected = -1;
 
+
+    public bool openPopUp;
 
     void Update()
     {
@@ -473,6 +483,13 @@ public class GUIManager : MonoBehaviour
                     tutorialIndex++;
                 }
 
+                if (GUILayout.Button("Skip Tutorial"))
+                {
+                    PlayerPrefs.SetInt("isFirstTime", 1);
+                    tutorialIndex = 10;
+                    isFirstTime = false;
+                }
+
             break;
             case 1:
                 GUILayout.Label("The first thing you will need to do is go to the Ingredients tab. It is located on the bottom of the screen.");
@@ -487,40 +504,64 @@ public class GUIManager : MonoBehaviour
                 {
                     tutorialIndex++;
                 }
+                if (GUILayout.Button("Skip Tutorial"))
+                {
+                    PlayerPrefs.SetInt("isFirstTime", 1);
+                    tutorialIndex = 10;
+                    isFirstTime = false;
+                }
             break;
             case 4:
                 GUILayout.Label("This Screen will allow you to view all the recipes you can make with what you have in your pantry.");
-                GUILayout.Label("You can sort the recipes by percent.");
+                GUILayout.Label("Recipe Genie sorts your recipes based what you have in your pantry.");
                 GUILayout.Label("Press \"Ok\" to view the recipes, then click on a recipe that you want to view.");
                 if (GUILayout.Button("Ok"))
                 {
                     tutorialIndex++;
+                }
+                if (GUILayout.Button("Skip Tutorial"))
+                {
+                    PlayerPrefs.SetInt("isFirstTime", 1);
+                    tutorialIndex = 10;
+                    isFirstTime = false;
                 }
             break;
             case 6:
                 GUILayout.Label("You have selected a recipe to view.");
                 GUILayout.Label("Here you have a few options for the recipes. You can see all the ingridents needed to make the recipe " +
                     ", the steps on how to make it and a link to the website of the original recipe. If you like a recipe, click the \"Like\" button on " +
-                    " the top of the page. You can view all your liked recipes in the \"Settings\" page.");
+                    " the top of the page. You can view all your liked recipes in the \"Menu\" page.");
                 GUILayout.Label("If you want to make a recipe you can click the \"Cook\" button and it will add all the ingredients you " +
-                    "are missing to a grocery list which you can also view in the \"Settings\" page.");
+                    "are missing to a grocery list which you can also view in the \"Menu\" page.");
                 GUILayout.Label("Press \"Ok\" to continue");
                 if (GUILayout.Button("Ok"))
                 {
                     tutorialIndex++;
                 }
+                if (GUILayout.Button("Skip Tutorial"))
+                {
+                    PlayerPrefs.SetInt("isFirstTime", 1);
+                    tutorialIndex = 10;
+                    isFirstTime = false;
+                }
             break;
             case 7:
-                GUILayout.Label("Press \"Ok\" to continue, then click on the \"Settings\" tab once you are done");
+                GUILayout.Label("Press \"Ok\" to continue, then click on the \"Menu\" tab once you are done");
                 if (GUILayout.Button("Ok"))
                 {
                     tutorialIndex++;
                 }
+                if (GUILayout.Button("Skip Tutorial"))
+                {
+                    PlayerPrefs.SetInt("isFirstTime", 1);
+                    tutorialIndex = 10;
+                    isFirstTime = false;
+                }
             break;
             case 9:
-            GUILayout.Label("The settings page has a lot of options.");
+            GUILayout.Label("The Menu page has a lot of options.");
             GUILayout.Label("Here you can view your grocery list, liked recipes and you can even create your own recipes and ingredients.");
-            GUILayout.Label("If you would like to remove the ad's you can pay a small price to remove them. You will also unlock different themes as well.");
+            GUILayout.Label("If you would like to remove the ad's you can pay a small price to remove them.");
             GUILayout.Label("We hope you enjoy Recipe Genie!");
 
             if (GUILayout.Button("Now let's get Cookin!"))
@@ -543,7 +584,7 @@ public class GUIManager : MonoBehaviour
     }
     void DrawPantryWindow( int windowid )
     {
-        scrollPosition = GUI.BeginScrollView(new Rect(0, 25, middleWindow.width - 5, middleWindow.height - 30), scrollPosition, new Rect(0, 0, 0, RecipeManager.allIngridents.Count * 79));
+        scrollPosition = GUI.BeginScrollView(new Rect(0, 25, middleWindow.width - 15, middleWindow.height - 30), scrollPosition, new Rect(0, 0, 0, RecipeManager.allIngridents.Count * 79));
 
         for (int i = 0; i < RecipeManager.allIngridents.Count; i++)
         {
@@ -708,6 +749,24 @@ public class GUIManager : MonoBehaviour
         return RecipeManager.allRecipes[index].id;
     }
 
+    void DrawPopUpScreen()
+    {
+        GUI.skin = tutorialSkin;
+
+        Rect customRect = new Rect(0, 0, Screen.width + 2, middleWindowNonSort.height);
+        customRect = GUI.Window(0, customRect, DrawPopUpWindow, "");
+    }
+    void DrawPopUpWindow(int windowId)
+    {
+        GUILayout.Label("Thank you for your submission.");
+        GUILayout.Label("You can view your submission once you restart Recipe Genie.");
+
+        if (GUILayout.Button("Got it!"))
+        {
+            openPopUp = false;
+        }
+    }
+
     // liked recipe pages
     void DrawLikedRecipe()
     {
@@ -757,7 +816,7 @@ public class GUIManager : MonoBehaviour
     void DrawRecipe()
     {
         GUI.skin = recipePickerSkin;
-        Rect customRect = new Rect(middleWindowNonSort.x - 8, middleWindowNonSort.y, middleWindowNonSort.width + 10, middleWindowNonSort.height - 6);
+        Rect customRect = new Rect(middleWindowNonSort.x - 8, middleWindowNonSort.y, middleWindowNonSort.width + 15, middleWindowNonSort.height - 6);
 
         customRect = GUI.Window(0, customRect, DrawRecipeWindow, "");
     }
@@ -864,7 +923,7 @@ public class GUIManager : MonoBehaviour
     void DrawSelectedRecipe()
     {
         GUI.skin = recipePickerTopSkin;
-        Rect customRect = new Rect(middleWindowNonSort.x - 8, middleWindowNonSort.y, middleWindowNonSort.width + 15, middleWindowNonSort.height + heightAdjuster);
+        Rect customRect = new Rect(middleWindowNonSort.x - 8, middleWindowNonSort.y + 5, middleWindowNonSort.width + 15, middleWindowNonSort.height - 5);
 
         customRect = GUI.Window(0, customRect, DrawSelectedRecipeWindow, "");
     }
@@ -881,14 +940,14 @@ public class GUIManager : MonoBehaviour
             currentMiddleIndex = 2;
             scrollPosition = oldRecipePositionIndex;
         }
-        if (LoginGUI.instance.Username() == "Dex" || LoginGUI.instance.Username() == "Chris")
-        {
-            if (GUILayout.Button("Edit", GUILayout.Height(44)))
-            {
-                EditRecipe();
-                currentMiddleIndex = 8;
-            }
-        }
+        //if (LoginGUI.instance.Username() == "Dex" || LoginGUI.instance.Username() == "Chris")
+        //{
+        //    if (GUILayout.Button("Edit", GUILayout.Height(44)))
+        //    {
+        //        EditRecipe();
+        //        currentMiddleIndex = 8;
+        //    }
+        //}
 		if (GUILayout.Button ("Report", GUILayout.Height(44))) {
 			for(int i = 0; i < PantryManager.myLikedRecipes.Count; i++)
 				Debug.Log(PantryManager.myLikedRecipes[i]);
@@ -1367,6 +1426,7 @@ public class GUIManager : MonoBehaviour
 
     private IEnumerator WaitAndClear()
     {
+        openPopUp = true;
         ingridentText = "Ingredient submitted! Thank you.";
         isWaiting = true;
         yield return new WaitForSeconds(1.0f);
@@ -1559,7 +1619,7 @@ public class GUIManager : MonoBehaviour
                 DrawRecipe();
                 break;
             case 3:
-                titleOfPage = "Settings";
+                titleOfPage = "Menu";
                 DrawSettings();
                 break;
             case 4:
@@ -1613,7 +1673,7 @@ public class GUIManager : MonoBehaviour
 		//float windowHeight = (Screen.height - (Screen.height - middleWindow.height));
         for (int i = 0; i < 26; i++)
         {
-			if (GUI.Button(new Rect(topRowRect.x, topRowRect.y + (i * topRowRect.height / 26), topRowRect.width, topRowRect.height / 26), GetColumnName(i)))
+			if (GUI.Button(new Rect(topRowRect.x - 5, 15 + topRowRect.y + (i * topRowRect.height / 27), topRowRect.width, topRowRect.height / 26), GetColumnName(i)))
             {
                 SearchBar(i);
             }
@@ -1628,7 +1688,7 @@ public class GUIManager : MonoBehaviour
     {
         GUI.skin = bottomRowSkin;
         //GUI.Box(bottomRowRect, "");
-        GUI.Box(new Rect(0, Screen.height - 75, Screen.width + 2, 80), "");
+        GUI.Box(new Rect(0, Screen.height - 85, Screen.width + 2, 90), "");
 
         if (isFirstTime)
         {
@@ -1638,7 +1698,7 @@ public class GUIManager : MonoBehaviour
                     //if (GUI.Button(new Rect(4 + 0 * (Screen.width / 4 - 10), Screen.height - 65, Screen.width / 4 - 10, 60), bottomRowIcons[0]))
                     //if (GUI.Button(new Rect(4 + 0 * (Screen.width / 8 - 10), Screen.height - 71, 70, 70), bottomRowIcons[0]))
                     //if (GUI.Button(new Rect(((Screen.width / 4)) + (0 * (Screen.width / 4) / 2), Screen.height - 71, 70, 70), bottomRowIcons[0]))
-                    if (GUI.Button(new Rect((Screen.width / bottomRowIcons.Length * .25f) + (0 * Screen.width / bottomRowIcons.Length), Screen.height - 73, 78, 78), bottomRowIcons[0]))
+                    if (GUI.Button(new Rect((Screen.width / bottomRowIcons.Length * .25f) + (0 * Screen.width / bottomRowIcons.Length), Screen.height - 76, 86, 86), bottomRowIcons[0]))
                     {
                         tutorialIndex++;
 
@@ -1655,7 +1715,7 @@ public class GUIManager : MonoBehaviour
                     //if (GUI.Button(new Rect(4 + 2 * (Screen.width / 4 - 10), Screen.height - 65, Screen.width / 4 - 10, 60), bottomRowIcons[2]))
                     //if (GUI.Button(new Rect(4 + 2 * (Screen.width / 8 - 10), Screen.height - 71, 70, 70), bottomRowIcons[2]))
                     //if (GUI.Button(new Rect(((Screen.width / 4)) + (2 * (Screen.width / 4) / 2), Screen.height - 71, 70, 70), bottomRowIcons[2]))
-                    if (GUI.Button(new Rect((Screen.width / bottomRowIcons.Length * .25f) + (2 * Screen.width / bottomRowIcons.Length), Screen.height - 73, 78, 78), bottomRowIcons[2]))
+                    if (GUI.Button(new Rect((Screen.width / bottomRowIcons.Length * .25f) + (2 * Screen.width / bottomRowIcons.Length), Screen.height - 76, 86, 86), bottomRowIcons[2]))
                     {
                         tutorialIndex++;
 
@@ -1681,7 +1741,7 @@ public class GUIManager : MonoBehaviour
                     //if (GUI.Button(new Rect(4 + 3 * (Screen.width / 4 - 10), Screen.height - 65, Screen.width / 4 - 10, 60), bottomRowIcons[3]))
                     //if (GUI.Button(new Rect(Screen.width - Screen.width / 8, Screen.height - 71, 70, 70), bottomRowIcons[3]))
                     //if (GUI.Button(new Rect(((Screen.width / 4)) + (3 * (Screen.width / 4) / 2), Screen.height - 71, 70, 70), bottomRowIcons[3]))
-                    if (GUI.Button(new Rect((Screen.width / bottomRowIcons.Length * .25f) + (3 * Screen.width / bottomRowIcons.Length), Screen.height - 73, 78, 78), bottomRowIcons[3]))
+                    if (GUI.Button(new Rect((Screen.width / bottomRowIcons.Length * .25f) + (3 * Screen.width / bottomRowIcons.Length), Screen.height - 76, 86, 86), bottomRowIcons[3]))
                     {
                         tutorialIndex++;
 
@@ -1703,8 +1763,11 @@ public class GUIManager : MonoBehaviour
                 //if (GUI.Button(new Rect(4 + i * (Screen.width / 4 - 10), Screen.height - 72, Screen.width / 4 - 10, 72), ReturnBotRowNames(i)))
                 //if (GUI.Button(new Rect(4 + i * (Screen.width / 8 - 10), Screen.height - 71, 70, 70), bottomRowIcons[i]))
                 //if (GUI.Button(new Rect((Screen.width / bottomRowIcons.Length * .5f) + (i * Screen.width / bottomRowIcons.Length), Screen.height - 73, 78, 78), bottomRowIcons[i]))
-                if (GUI.Button(new Rect((Screen.width / bottomRowIcons.Length * .25f) + (i * Screen.width / bottomRowIcons.Length), Screen.height - 73, 78, 78), bottomRowIcons[i]))
+                if (GUI.Button(new Rect((Screen.width / bottomRowIcons.Length * .25f) + (i * Screen.width / bottomRowIcons.Length), Screen.height - 76, 86, 86), bottomRowIcons[i]))
                 {
+                    openPopUp = false;
+                    IncreaseTouchCount();
+
                     if (i == 2 && !initRecipeList)
                     {
                         initRecipeList = true;
@@ -1795,7 +1858,7 @@ public class GUIManager : MonoBehaviour
                 name = "Recipes";
                 break;
             case 3:
-                name = "Settings";
+                name = "Menu";
                 break;
         }
 

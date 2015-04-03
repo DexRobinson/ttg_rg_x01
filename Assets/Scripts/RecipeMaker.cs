@@ -298,7 +298,7 @@ public class RecipeMaker : MonoBehaviour {
                     this.ingridetns.Clear();
                     this.steps.Clear();
                     GUIManager.instance.isEditing = false;
-                        
+                    GUIManager.instance.openPopUp = true;
 				}
 			}
 		}

@@ -132,30 +132,42 @@ public class LoginGUI : MonoBehaviour {
                 GUILayout.Box(errorRegisiter);
 
 
-                //GUI.SetNextControlName("username");
+                GUI.SetNextControlName("username");
                 GUILayout.BeginHorizontal();
                 GUILayout.Label(userTexture, GUILayout.Width(120));
                 username = GUILayout.TextField(username);
                 username = Regex.Replace(username, @"[^a-zA-Z0-9]", "");
                 GUILayout.EndHorizontal();
 
+                GUI.SetNextControlName("pass");
                 GUILayout.BeginHorizontal();
                 GUILayout.Label(lockTexture, GUILayout.Width(120));
                 password = GUILayout.TextField(password);
                 password = Regex.Replace(password, @"[^a-zA-Z0-9]", "");
                 GUILayout.EndHorizontal();
 
+                GUI.SetNextControlName("repass");
                 GUILayout.BeginHorizontal();
                 GUILayout.Label(lockTexture, GUILayout.Width(120));
                 rePassword = GUILayout.TextField(rePassword);
                 rePassword = Regex.Replace(rePassword, @"[^a-zA-Z0-9]", "");
                 GUILayout.EndHorizontal();
 
+                GUI.SetNextControlName("email");
                 GUILayout.BeginHorizontal();
                 GUILayout.Label(emailTexture, GUILayout.Width(120));
                 emailText = GUILayout.TextField(emailText);
                 emailText = Regex.Replace(emailText, @"[^a-zA-Z0-9@.]", "");
                 GUILayout.EndHorizontal();
+
+                if (GUI.GetNameOfFocusedControl() == "username" && username == "username")
+                    username = "";
+                if (GUI.GetNameOfFocusedControl() == "pass" && password == "password")
+                    password = "";
+                if (GUI.GetNameOfFocusedControl() == "repass" && rePassword == "password")
+                    rePassword = "";
+                if (GUI.GetNameOfFocusedControl() == "email" && emailText == "email")
+                    emailText = "";
 
                 //GUILayout.BeginHorizontal();
                 //GUILayout.Label("First Name: ", GUILayout.Width(120));
@@ -201,7 +213,11 @@ public class LoginGUI : MonoBehaviour {
 
             //GUILayout.BeginHorizontal();
             //GUI.SetNextControlName("username");
+
+            
             GUI.DrawTexture(ReturnRect(iconRect, bounsIconRect), iconTexture);
+            
+            
 
             //GUILayout.Label("Username: ", GUILayout.Height(90), GUILayout.Width(120));
             GUI.Label(ReturnRect(usernameTextureRect), userTexture);
