@@ -126,11 +126,11 @@ public class GUIManager : MonoBehaviour
             if (Advertisement.isReady())
             {
                 touchCount = 0;
-<<<<<<< HEAD
+//<<<<<<< HEAD
                 openPopUp = false;
-=======
+//=======
                 //adManager.PlayFullScreenAd();
->>>>>>> origin/master
+//>>>>>>> origin/master
                 Advertisement.Show();
             }
 
