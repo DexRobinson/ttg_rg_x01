@@ -6,6 +6,8 @@ public class GestureHandler : MonoBehaviour {
 
 	public static float maxDistance;
 
+    private float _intertiaDuration = 0.75f;
+
 	public static void InitMaxDistance()
 	{
 		maxDistance = RecipeManager.allIngridents.Count * 79;
@@ -15,7 +17,7 @@ public class GestureHandler : MonoBehaviour {
 	{
 		// Drag/displacement since last frame
 		guiManager.ScrollPosition += gesture.DeltaMove;
-		guiManager.targetScrollPositionY += gesture.DeltaMove.y;
+        guiManager.targetScrollPositionY += gesture.DeltaMove.y;
 	}
 
 	void OnSwipe(SwipeGesture gesture)
@@ -39,7 +41,7 @@ public class GestureHandler : MonoBehaviour {
         float ratio = Mathf.Abs(velocity) / Mathf.Abs(move);
         //Debug.Log("Ratio: " + ratio);
 
-        if (Mathf.Abs(velocity) > 1000 && ratio > 5)
+        if (Mathf.Abs(velocity) > 500 && ratio > 5)
         {
             guiManager.swipeVelocity = gesture.Velocity * 0.003f;
 
@@ -48,4 +50,11 @@ public class GestureHandler : MonoBehaviour {
         }
         //guiManager.ScrollPosition = new Vector2(0, guiManager.ScrollPosition.y + gesture.Move.y);
 	}
+
+    void OnFingerUp( FingerUpEvent e )
+    {
+        // time the finger has been held down before being released
+        float elapsedTime = e.TimeHeldDown;
+        Debug.Log(elapsedTime.ToString());
+    }
 }

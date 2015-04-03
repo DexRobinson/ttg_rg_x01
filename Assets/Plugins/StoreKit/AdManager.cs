@@ -6,7 +6,12 @@ public class AdManager : MonoBehaviour {
 	private int bannerIsEnabled; // this is used to check if ads can be run using this...
 
 	#if UNITY_IPHONE
+<<<<<<< HEAD
 	private UnityEngine.iOS.ADBannerView banner = null;
+=======
+	private ADBannerView banner = null;
+    private ADInterstitialAd fullScreenAd = null;
+>>>>>>> origin/master
     #endif
 
 	void Awake()
@@ -17,7 +22,9 @@ public class AdManager : MonoBehaviour {
             #if UNITY_IPHONE
             if(bannerIsEnabled == 0)
             {
-			    //banner = new ADBannerView (ADBannerView.Type.Banner, ADBannerView.Layout.Top);
+                fullScreenAd = new ADInterstitialAd();
+                ADInterstitialAd.onInterstitialWasLoaded += PlayFullScreenAd;
+			    //banner = new ADBannerView (ADBannerView.Type., ADBannerView.Layout.Top);
 			    //ADBannerView.onBannerWasClicked += OnBannerClicked;
 			    //ADBannerView.onBannerWasLoaded += OnBannerLoaded;
             }
@@ -63,6 +70,20 @@ public class AdManager : MonoBehaviour {
 	{
 		PlayerPrefs.SetInt ("bannerIsEnabled", 1);
 	}
+
+    public void PlayFullScreenAd()
+    {
+        StartCoroutine(_PlayFullScreenAd());
+    }
+    private IEnumerator _PlayFullScreenAd()
+    {
+        while (!fullScreenAd.loaded)
+            yield return new WaitForEndOfFrame();
+
+        if (fullScreenAd.loaded)
+            fullScreenAd.Show();
+    }
+
 #endif
 
     public bool IsAdsRunning()

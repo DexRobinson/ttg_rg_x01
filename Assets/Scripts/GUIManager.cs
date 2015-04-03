@@ -126,9 +126,14 @@ public class GUIManager : MonoBehaviour
             if (Advertisement.isReady())
             {
                 touchCount = 0;
+<<<<<<< HEAD
                 openPopUp = false;
+=======
+                //adManager.PlayFullScreenAd();
+>>>>>>> origin/master
                 Advertisement.Show();
             }
+
         }
     }
 	public Rect ReturnMiddleRect()
@@ -151,6 +156,24 @@ public class GUIManager : MonoBehaviour
             Advertisement.Initialize(productId);
         }
     }
+
+    private List<PantryListItem> myPantryItems = new List<PantryListItem>();
+    void InitPantryWithItems()
+    {
+        for (int i = 0; i < RecipeManager.allIngridents.Count; i++)
+        {
+            myPantryItems.Add(new PantryListItem(RecipeManager.allIngridents[i].name, false, RecipeManager.allIngridents[i].id));
+
+            if (RecipeManager.allIngridents[i].name.Length > 1)
+            {
+                if (ReturnIfHaveIngridentName(RecipeManager.allIngridents[i]))
+                {
+                    myPantryItems[i].hasIngrident = true;
+                }
+            }
+        }
+    }
+
 
     void Start()
     {
@@ -199,6 +222,8 @@ public class GUIManager : MonoBehaviour
 			_products = allProducts;
 		};
         #endif
+
+        //InitPantryWithItems();
     }
 
     void OnGUI()
@@ -305,13 +330,6 @@ public class GUIManager : MonoBehaviour
         //        }
         //    }
         //}
-
-
-
-
-
-
-
     }
 
     // checks to make sure that the user has pressed the button and they arent trying to scroll instead
@@ -574,6 +592,7 @@ public class GUIManager : MonoBehaviour
         }
     }
 
+    
 
     // all pantry pages
     void DrawPantry()
@@ -586,11 +605,11 @@ public class GUIManager : MonoBehaviour
     {
         scrollPosition = GUI.BeginScrollView(new Rect(0, 25, middleWindow.width - 15, middleWindow.height - 30), scrollPosition, new Rect(0, 0, 0, RecipeManager.allIngridents.Count * 79));
 
-        for (int i = 0; i < RecipeManager.allIngridents.Count; i++)
+        for (int i = 0; i < myPantryItems.Count; i++)
         {
-            if (RecipeManager.allIngridents[i].name.Length > 1)
+            if (myPantryItems[i].Name.Length > 1)
             {
-                if (ReturnIfHaveIngridentName(RecipeManager.allIngridents[i]))
+                if (myPantryItems[i].hasIngrident)
                 {
                     GUI.skin = gotIngSkin;
                     GUI.Label(new Rect(5, 79 * i, middleWindow.width - 117, 75), RecipeManager.allIngridents[i].name);
@@ -602,6 +621,7 @@ public class GUIManager : MonoBehaviour
                             initRecipeList = false;
                             sortRecipes = false;
                             IncreaseTouchCount();
+                            myPantryItems[i].hasIngrident = false;
                             PantryManager.RemoveFromMyPantry(RecipeManager.allIngridents[i]);
                         }
                         else
@@ -609,6 +629,7 @@ public class GUIManager : MonoBehaviour
                             initRecipeList = false;
                             sortRecipes = false;
                             IncreaseTouchCount();
+                            //myPantryItems[i].hasIngrident = true;
                             RecipeMaker.instance.AddToCreateRecipe(i);
                         }
                     }
@@ -625,7 +646,9 @@ public class GUIManager : MonoBehaviour
                             initRecipeList = false;
                             sortRecipes = false;
                             IncreaseTouchCount();
+                            myPantryItems[i].hasIngrident = true;
                             PantryManager.AddToMyPantry(RecipeManager.allIngridents[i]);
+                            //Debug.Log("ID: " + RecipeManager.allIngridents[i].id);
                         }
                         else
                         {
@@ -641,12 +664,26 @@ public class GUIManager : MonoBehaviour
             }
             else
             {
-                GUI.Box(new Rect(5, 79 * i, middleWindow.width - 38, 75), RecipeManager.allIngridents[i].name);
+                GUI.Box(new Rect(5, 79 * i, middleWindow.width - 38, 75), myPantryItems[i].Name);
             }
         }
 
         GUI.EndScrollView();
     }
+
+
+    void ChangePantry( Ing ing, bool have )
+    {
+        for (int i = 0; i < myPantryItems.Count; i++)
+        {
+            if (myPantryItems[i].index == ing.id)
+            {
+                myPantryItems[i].hasIngrident = have;
+                return;
+            }
+        }
+    }
+
 
     // my pantry pages
     void DrawMyPantry()
@@ -659,6 +696,10 @@ public class GUIManager : MonoBehaviour
     {
         scrollPosition = GUI.BeginScrollView(new Rect(0, 25, middleWindowNonSort.width - 5, middleWindowNonSort.height - 30), scrollPosition, new Rect(0, 0, 0, PantryManager.myIngridents.Count * 79));
 
+        while (middleWindow.x > 10)
+        {
+        }
+
         for (int i = 0; i < PantryManager.myIngridents.Count; i++)
         {
             GUI.skin = gotIngSkin;
@@ -668,6 +709,10 @@ public class GUIManager : MonoBehaviour
                 initRecipeList = false;
                 sortRecipes = false;
                 IncreaseTouchCount();
+                //Debug.Log("Remove: " + PantryManager.myIngridents[i].id);
+                //myPantryItems[PantryManager.myIngridents[i].id].hasIngrident = false;
+
+                ChangePantry(PantryManager.myIngridents[i], false);
                 PantryManager.RemoveFromMyPantry(i);
             }
         }
@@ -1095,6 +1140,12 @@ public class GUIManager : MonoBehaviour
         GUILayout.EndScrollView();
     }
 
+
+    void UpdatePantry()
+    {
+
+    }
+
     bool ReturnIfHaveIngridentName( Ing ing )
     {
         //if (PantryManager.myIngridents.Contains(ing))
@@ -1325,8 +1376,9 @@ public class GUIManager : MonoBehaviour
             // remove ads for 0.99 = ~2k-4k ads per user
             // 500-4000 mins of ads @ 5 mins/day = 100-800 days(~2 years)
             //BuyInAppPurchase(0);
-            if(StoreKitBinding.canMakePayments())
-                StoreKitBinding.restoreCompletedTransactions();
+            //if(StoreKitBinding.canMakePayments())
+            
+            StoreKitBinding.restoreCompletedTransactions();
         }
 
         if (GUILayout.Button("Back", centerAlign))
@@ -1599,6 +1651,8 @@ public class GUIManager : MonoBehaviour
         allSortedList = RecipeManager.allRecipes.OrderByDescending(c => c.percent).ThenBy(c => c.title).ToList();
 
         InsertMyUploadedRecipes();
+
+        InitPantryWithItems();
     }
 
     // draw what the current page is
@@ -1870,5 +1924,19 @@ public class GUIManager : MonoBehaviour
     {
         get { return scrollPosition; }
         set { scrollPosition = value; }
+    }
+}
+
+public class PantryListItem
+{
+    public string Name;
+    public bool hasIngrident;
+    public int index;
+
+    public PantryListItem( string name, bool hasIngrident, int index )
+    {
+        this.Name = name;
+        this.hasIngrident = hasIngrident;
+        this.index = index;
     }
 }
